@@ -1,0 +1,11 @@
+.github
+.idea
+.src
+.public
+.exports.js
+.rollup.config.js
+tsconfig.json
+*.log
+.prettierrc
+.gitignore
+public
