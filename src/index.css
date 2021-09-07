@@ -11,6 +11,19 @@ body {
   --color-accent-20: #386eff20;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:link,
+a:visited {
+  color: var(--color-accent);
+}
+a:hover,
+a:active {
+  color: var(--color-accent-50);
+}
+
 .App {
   font-family: sans-serif;
 }
@@ -19,11 +32,12 @@ body {
   height: 50px;
   padding: 0 60px;
   background-color: var(--color-bg-gray);
-  display: flex;
   align-items: center;
   position: sticky;
   z-index: 100;
   top: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .Content {
