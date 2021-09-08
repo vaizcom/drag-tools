@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react';
+import { diff } from 'fast-array-diff';
 
 interface IDimensions {
   x: number;
@@ -15,6 +16,7 @@ export const useIntersect = (
   setSelected: (ids: string[]) => void,
   // Add here an IntersectionObserver to observe only visible items
 ) => {
+  const selectedCache = useRef<string[]>([]);
   const boxes = useRef(new Map<string, IDimensions>());
 
   const getBox = (element: HTMLElement) => {
@@ -30,6 +32,7 @@ export const useIntersect = (
         boxes.current.set(id, getBox(element));
       }
     });
+    selectedCache.current = [];
     setSelected([]);
   };
 
@@ -63,7 +66,12 @@ export const useIntersect = (
         }
       }
     });
-    setSelected(ids);
+    const cachedDiff = diff(selectedCache.current, ids);
+    if (cachedDiff.added.length > 0 || cachedDiff.removed.length > 0) {
+      console.log('xxx');
+      setSelected(ids);
+      selectedCache.current = ids;
+    }
   }, [itemsSelector, areaSelector, extractId, setSelected]);
 
   return {
