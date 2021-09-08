@@ -11,10 +11,9 @@ interface IDimensions {
 export const useIntersect = (
   areaSelector: string,
   itemsSelector: string,
-  callback: () => void,
   extractId: (e: HTMLElement) => string | undefined,
   setSelected: (ids: string[]) => void,
-  // Add here an IntersectionObserver to observe only visible items
+  //TODO: Add here an IntersectionObserver to observe only visible items
 ) => {
   const selectedCache = useRef<string[]>([]);
   const boxes = useRef(new Map<string, IDimensions>());

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState, useRef, FC } from 'react';
+import React, { useState, useRef, FC } from 'react';
 import { useIntersect } from './useIntersect';
+import { touchOrClick } from './utils';
 
 interface IProps {
   itemClassName: string;
@@ -26,19 +27,19 @@ export const Selectable: FC<IProps> = ({
   const { calculateIntersections, flushBoxesCache } = useIntersect(
     `.${selectAreaClassName}`,
     `.${itemClassName}`,
-    () => {},
     e => e.dataset.id,
     onSelect,
   );
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (isEnabled && isSelecting && selectingRef.current && contentRef.current && selectingStartCoordsRef.current) {
+      const { clientX, clientY } = touchOrClick(e);
       const selecting = selectingRef.current;
       const selectingStartCoords = selectingStartCoordsRef.current;
       let left = selectingStartCoords[0];
       let top = selectingStartCoords[1];
-      let width = e.clientX - selectingStartCoords[0];
-      let height = e.clientY - selectingStartCoords[1];
+      let width = clientX - selectingStartCoords[0];
+      let height = clientY - selectingStartCoords[1];
 
       if (width < 0) {
         left = left + width;
@@ -59,11 +60,12 @@ export const Selectable: FC<IProps> = ({
     }
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isEnabled) {
       return;
     }
-    selectingStartCoordsRef.current = [e.clientX, e.clientY];
+    const { clientX, clientY } = touchOrClick(e);
+    selectingStartCoordsRef.current = [clientX, clientY];
     setSelecting(true);
     flushBoxesCache();
     onSelect([]);
@@ -74,7 +76,13 @@ export const Selectable: FC<IProps> = ({
   };
 
   return (
-    <div onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
+    <div
+      onTouchStart={handleMouseDown}
+      onTouchEnd={handleMouseUp}
+      onTouchMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}>
       <div className={containerClassName} ref={contentRef}>
         {children}
       </div>

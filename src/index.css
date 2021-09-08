@@ -7,8 +7,10 @@ body {
 :root {
   --color-bg-gray: #f2f3f4;
   --color-accent: #386eff;
+  --color-accent-hover: rgb(25, 76, 214);
   --color-accent-50: #386eff50;
   --color-accent-20: #386eff20;
+  --color-link: #888;
 }
 
 a {
@@ -17,11 +19,11 @@ a {
 
 a:link,
 a:visited {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 a:hover,
 a:active {
-  color: var(--color-accent-50);
+  color: #000;
 }
 
 .App {
@@ -30,7 +32,7 @@ a:active {
 
 .Header {
   height: 50px;
-  padding: 0 60px;
+  padding: 0 40px;
   background-color: var(--color-bg-gray);
   align-items: center;
   position: sticky;
@@ -40,15 +42,45 @@ a:active {
   grid-template-columns: 1fr auto;
 }
 
+.Aside {
+  width: 260px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.NavItem {
+  padding: 0 20px;
+  color: var(--color-link);
+  cursor: pointer;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.NavItem.Active {
+  background-color: var(--color-bg-gray);
+  border-radius: 6px;
+  color: black;
+}
+
+.HeaderTitle {
+  font-weight: 600;
+}
+
 .Content {
   height: calc(100vh - 50px);
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+}
+
+.ViewportSection {
   display: grid;
 }
 
 .Container {
   display: grid;
-  padding: 60px;
+  padding: 40px;
   gap: 20px;
   justify-content: start;
   position: relative;
