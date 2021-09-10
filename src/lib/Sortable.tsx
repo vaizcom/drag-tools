@@ -1,10 +1,10 @@
 import { animate, motion, useMotionValue, Spring } from 'framer-motion';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { touchOrClick } from './utils';
 
 interface ISortableProps {}
 
-interface ISortableCellProps {
+interface ISortableCellProps extends HTMLAttributes<HTMLDivElement> {
   index: number;
 }
 
@@ -20,7 +20,7 @@ const ANIMATION_CONFIG: Spring = {
   damping: 50,
 };
 
-export const SortableCell: FC<ISortableCellProps> = ({ children }) => {
+export const SortableCell: FC<ISortableCellProps> = ({ children, index, ...props }) => {
   const ref = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const refHold = useRef<boolean>(false);
@@ -88,7 +88,7 @@ export const SortableCell: FC<ISortableCellProps> = ({ children }) => {
   }, []);
 
   return (
-    <div ref={ref} onMouseDown={handleInteractStart} onTouchStart={handleInteractStart}>
+    <div {...props} data-index={index} ref={ref} onMouseDown={handleInteractStart} onTouchStart={handleInteractStart}>
       <motion.div style={{ x, y }} ref={innerRef}>
         {children}
       </motion.div>

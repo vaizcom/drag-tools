@@ -61,8 +61,14 @@ export const Selectable: FC<IProps> = ({
   };
 
   const handleInteractStart = (e: React.MouseEvent | React.TouchEvent) => {
+    const itemNodes = document.querySelectorAll(`.${itemClassName}`);
     const element = e.target as HTMLElement;
-    const elementIsItem = element.classList.contains(itemClassName);
+    let elementIsItem = element.classList.contains(itemClassName);
+    itemNodes.forEach(node => {
+      if (node.contains(element)) {
+        elementIsItem = true;
+      }
+    });
     if (!isEnabled || elementIsItem) {
       return;
     }

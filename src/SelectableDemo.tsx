@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
 import { Selectable } from './lib/Selectable';
+import { SortableCell } from './lib/Sortable';
+import classNames from 'classnames';
 
 interface IProps {}
 
@@ -15,16 +17,33 @@ export const SelectableDemo: FC<IProps> = () => {
       isEnabled={true}
       containerClassName='Container SelectableContainer'
       selectAreaClassName='Area'
-      itemClassName='Item'>
-      {ITEMS.map(i => (
-        <div key={i} data-id={i} className={`Item Item1 ${selected.includes(i) && ' Selected'}`}>
-          {i}
+      itemClassName='SelectableItem'>
+      <div>Selectable</div>
+      <div></div>
+      {ITEMS2.map(item => (
+        <div key={item} data-id={item} className='SelectableItem'>
+          <div
+            className={classNames('Item', {
+              Selected: selected.includes(item),
+            })}>
+            {item}
+          </div>
         </div>
       ))}
-      {ITEMS2.map(i => (
-        <div key={i} data-id={i} className={`Item ${selected.includes(i) && ' Selected'}`}>
-          {i}
-        </div>
+
+      <div></div>
+      <div></div>
+      <div>Selectable + Sortable</div>
+      <div></div>
+      {ITEMS.map((item, index) => (
+        <SortableCell key={item} data-id={item} className='SelectableItem' index={index}>
+          <div
+            className={classNames('Item', {
+              Selected: selected.includes(item),
+            })}>
+            {item}
+          </div>
+        </SortableCell>
       ))}
     </Selectable>
   );
