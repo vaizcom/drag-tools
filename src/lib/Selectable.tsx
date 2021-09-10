@@ -31,7 +31,7 @@ export const Selectable: FC<IProps> = ({
     onSelect,
   );
 
-  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleInteractMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (isEnabled && isSelecting && selectingRef.current && contentRef.current && selectingStartCoordsRef.current) {
       const { clientX, clientY } = touchOrClick(e);
       const selecting = selectingRef.current;
@@ -60,8 +60,10 @@ export const Selectable: FC<IProps> = ({
     }
   };
 
-  const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isEnabled) {
+  const handleInteractStart = (e: React.MouseEvent | React.TouchEvent) => {
+    const element = e.target as HTMLElement;
+    const elementIsItem = element.classList.contains(itemClassName);
+    if (!isEnabled || elementIsItem) {
       return;
     }
     const { clientX, clientY } = touchOrClick(e);
@@ -71,18 +73,18 @@ export const Selectable: FC<IProps> = ({
     onSelect([]);
   };
 
-  const handleMouseUp = () => {
+  const handleInteractEnd = () => {
     setSelecting(false);
   };
 
   return (
     <div
-      onTouchStart={handleMouseDown}
-      onTouchEnd={handleMouseUp}
-      onTouchMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}>
+      onTouchStart={handleInteractStart}
+      onTouchEnd={handleInteractEnd}
+      onTouchMove={handleInteractMove}
+      onMouseUp={handleInteractEnd}
+      onMouseDown={handleInteractStart}
+      onMouseMove={handleInteractMove}>
       <div className={containerClassName} ref={contentRef}>
         {children}
       </div>

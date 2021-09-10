@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { SelectableDemo } from './SelectableDemo';
+import { SortableDemo } from './SortableDemo';
 import { useLocation } from 'react-use';
 
 enum Nav {
   Selectable,
-  Draggable,
+  Sortable,
 }
 
 const NAV = [
@@ -16,10 +17,10 @@ const NAV = [
     Component: SelectableDemo,
   },
   {
-    id: Nav.Draggable,
-    label: 'Draggable',
-    path: 'draggable',
-    Component: SelectableDemo,
+    id: Nav.Sortable,
+    label: 'Sortable',
+    path: 'sortable',
+    Component: SortableDemo,
   },
 ];
 

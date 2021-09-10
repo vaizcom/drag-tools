@@ -13,7 +13,7 @@ export const SelectableDemo: FC<IProps> = () => {
     <Selectable
       onSelect={setSelected}
       isEnabled={true}
-      containerClassName='Container'
+      containerClassName='Container SelectableContainer'
       selectAreaClassName='Area'
       itemClassName='Item'>
       {ITEMS.map(i => (

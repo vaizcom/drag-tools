@@ -79,13 +79,23 @@ a:active {
 }
 
 .Container {
-  display: grid;
   padding: 40px;
-  gap: 20px;
+}
+
+.SelectableContainer {
+  display: grid;
   justify-content: start;
-  position: relative;
-  grid-template-rows: repeat(auto-fill, minmax(min-content, min-content));
+  gap: 20px;
+  grid-template-rows: repeat(auto-fill, 40px);
   grid-template-columns: min-content min-content;
+}
+
+.SortableContainer {
+  display: grid;
+  justify-content: start;
+  gap: 20px;
+  grid-template-rows: repeat(auto-fill, 40px);
+  grid-template-columns: min-content;
 }
 
 .Item {
