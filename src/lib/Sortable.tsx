@@ -1,11 +1,11 @@
+import classNames from 'classnames';
 import { animate, motion, useMotionValue, Spring } from 'framer-motion';
-import { FC, HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { FC, HTMLAttributes, useEffect, useRef } from 'react';
 import { touchOrClick } from './utils';
-
-interface ISortableProps {}
 
 interface ISortableCellProps extends HTMLAttributes<HTMLDivElement> {
   index: number;
+  itemClassName: string;
 }
 
 type TAnchor = Pick<DOMRect, 'left' | 'right' | 'top' | 'bottom' | 'width' | 'height'>;
@@ -20,7 +20,7 @@ const ANIMATION_CONFIG: Spring = {
   damping: 50,
 };
 
-export const SortableCell: FC<ISortableCellProps> = ({ children, index, ...props }) => {
+export const SortableCell: FC<ISortableCellProps> = ({ children, itemClassName, className, index, ...props }) => {
   const ref = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const refHold = useRef<boolean>(false);
@@ -36,6 +36,10 @@ export const SortableCell: FC<ISortableCellProps> = ({ children, index, ...props
     height: 0,
   });
   const startAnchorXy = useRef<TXy>({ x: 0, y: 0 });
+
+  const collectSiblings = () => {
+    return document.querySelectorAll(`.${itemClassName}`);
+  };
 
   const handleInteractStart = (e: React.MouseEvent | React.TouchEvent) => {
     refHold.current = true;
@@ -88,7 +92,14 @@ export const SortableCell: FC<ISortableCellProps> = ({ children, index, ...props
   }, []);
 
   return (
-    <div {...props} data-index={index} ref={ref} onMouseDown={handleInteractStart} onTouchStart={handleInteractStart}>
+    <div
+      {...props}
+      style={{ background: 'red' }}
+      className={classNames(itemClassName, className)}
+      data-index={index}
+      ref={ref}
+      onMouseDown={handleInteractStart}
+      onTouchStart={handleInteractStart}>
       <motion.div style={{ x, y }} ref={innerRef}>
         {children}
       </motion.div>
@@ -96,6 +107,6 @@ export const SortableCell: FC<ISortableCellProps> = ({ children, index, ...props
   );
 };
 
-export const Sortable: FC<ISortableProps> = ({ children }) => {
+export const Sortable: FC = ({ children }) => {
   return <div className='Container SortableContainer'>{children}</div>;
 };

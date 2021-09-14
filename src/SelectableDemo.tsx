@@ -36,7 +36,7 @@ export const SelectableDemo: FC<IProps> = () => {
       <div>Selectable + Sortable</div>
       <div></div>
       {ITEMS.map((item, index) => (
-        <SortableCell key={item} data-id={item} className='SelectableItem' index={index}>
+        <SortableCell itemClassName='SortableItem' key={item} data-id={item} className='SelectableItem' index={index}>
           <div
             className={classNames('Item', {
               Selected: selected.includes(item),

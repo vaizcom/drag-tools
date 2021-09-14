@@ -12,7 +12,7 @@ export const SortableDemo: FC<IProps> = () => {
   return (
     <Sortable>
       {ITEMS.map((item, index) => (
-        <SortableCell index={index} key={item}>
+        <SortableCell itemClassName='SortableItem' index={index} key={item}>
           <div className='Item'>{item}</div>
         </SortableCell>
       ))}
