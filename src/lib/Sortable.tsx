@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { animate, motion, useMotionValue, Spring } from 'framer-motion';
 import { FC, HTMLAttributes, useEffect, useRef } from 'react';
 import { touchOrClick } from './utils';
+import { useEffectOnce } from 'react-use';
 
 interface ISortableCellProps extends HTMLAttributes<HTMLDivElement> {
   index: number;
@@ -82,14 +83,14 @@ export const SortableCell: FC<ISortableCellProps> = ({ children, itemClassName, 
     }
   };
 
-  useEffect(() => {
+  useEffectOnce(() => {
     return () => {
       window.removeEventListener('mousemove', handleInteractMove);
       window.removeEventListener('touchmove', handleInteractMove);
       window.removeEventListener('mouseup', handleInteractEnd);
       window.removeEventListener('touchend', handleInteractEnd);
     };
-  }, []);
+  });
 
   return (
     <div
