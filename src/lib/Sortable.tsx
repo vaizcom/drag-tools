@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { animate, motion, useMotionValue, Spring } from 'framer-motion';
-import { FC, HTMLAttributes, useEffect, useRef } from 'react';
+import { FC, HTMLAttributes, useRef } from 'react';
 import { touchOrClick } from './utils';
 import { useEffectOnce } from 'react-use';
 
