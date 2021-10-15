@@ -37,9 +37,9 @@ export const SortableCell: FC<ISortableCellProps> = ({ children, itemClassName, 
   });
   const startAnchorXy = useRef<TXy>({ x: 0, y: 0 });
 
-  const collectSiblings = () => {
-    return document.querySelectorAll(`.${itemClassName}`);
-  };
+  // const collectSiblings = () => {
+  //   return document.querySelectorAll(`.${itemClassName}`);
+  // };
 
   const handleInteractStart = (e: React.MouseEvent | React.TouchEvent) => {
     refHold.current = true;
